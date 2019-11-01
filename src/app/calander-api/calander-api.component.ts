@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FullCalendarComponent } from '@fullcalendar/angular';
+import dayGridPlugin from '@fullcalendar/daygrid';
 @Component({
   selector: 'app-calander-api',
   templateUrl: './calander-api.component.html',
@@ -7,9 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CalanderAPIComponent implements OnInit {
 
-  constructor() { }
-
-  ngOnInit() {
-  }
+  calendarPlugins = [dayGridPlugin];
+  ngOnInit() {}
+  calander: CalanderAPIComponent;
 
 }
