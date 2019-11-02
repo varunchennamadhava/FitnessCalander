@@ -18,11 +18,16 @@ export class InfoPageComponent implements OnInit {
   //Male and Female
   //Male = true
   //female = false
-  public calculateBMR(heightL, weightL, ageL, genderL) {
+  public calculateBMR(heightL: number, weightL: number, ageL: number, genderL: boolean) {
     this.BMR = (10 * weightL) + (6.25 * heightL) - (5 * ageL);
     if (genderL === false) {
+      this.BMR = (10 * weightL) + (6.25 * heightL) - (5 * ageL) - 161;
     }
+    return this.BMR;
+  }
 
+  public onePoundPerWeek(bmr: number) {
+    return (bmr * (1.46)) - 500;
   }
   ngOnInit() {
   }
