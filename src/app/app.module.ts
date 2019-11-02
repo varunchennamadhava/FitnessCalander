@@ -4,11 +4,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CalanderAPIComponent } from './calander-api/calander-api.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { LoginComponent } from './login/login.component';
+import { InfoPageComponent } from './info-page/info-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CalanderAPIComponent
+    CalanderAPIComponent,
+    LoginComponent,
+    InfoPageComponent
   ],
   //hi
   imports: [
