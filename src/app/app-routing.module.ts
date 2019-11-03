@@ -1,7 +1,13 @@
+import { InfoPageComponent } from './info-page/info-page.component';
+import { CalanderAPIComponent } from './calander-api/calander-api.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-const routes: Routes = [];
+const routes: Routes = [
+  { path: '', redirectTo: '/calander', pathMatch: 'full' },
+  { path: 'calander', component: CalanderAPIComponent, },
+  { path: 'info-page', component: InfoPageComponent, },
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
