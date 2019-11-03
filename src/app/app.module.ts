@@ -8,6 +8,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import { LoginComponent } from './login/login.component';
 import { InfoPageComponent } from './info-page/info-page.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule,
     FullCalendarModule,
     BrowserAnimationsModule,
+    MaterialModule,
+    ReactiveFormsModule
+  ],
+  exports: [
     MaterialModule
   ],
   providers: [],

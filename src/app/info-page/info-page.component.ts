@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {MatCardModule} from '@angular/material/card';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 @Component({
   selector: 'app-info-page',
   templateUrl: './info-page.component.html',
@@ -8,7 +7,13 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 })
 export class InfoPageComponent implements OnInit {
 
-  constructor() { }
+  infoForm: FormGroup;
+
+  constructor(
+    private formBuilder: FormBuilder,
+  ) {
+    this.buildForm();
+  }
 
   weight: number;
   height: number;
@@ -30,7 +35,24 @@ export class InfoPageComponent implements OnInit {
   public onePoundPerWeek(bmr: number) {
     return (bmr * (1.46)) - 500;
   }
+
+  buildForm() {
+    this.infoForm = this.formBuilder.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      age: ['', Validators.required],
+      gender: ['', Validators.required],
+      height: ['', Validators.required],
+      weight: ['', Validators.required],
+    });
+  }
+
+  onSubmit(){
+    console.log(this.infoForm.value);
+  }
+
   ngOnInit() {
+    this.buildForm();
   }
 
 }
