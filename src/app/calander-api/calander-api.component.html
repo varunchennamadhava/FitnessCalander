@@ -1,4 +1,14 @@
 
 
-<full-calendar defaultView="dayGridMonth" [plugins]="calendarPlugins"></full-calendar>
+<full-calendar defaultView="dayGridMonth" [plugins]="calendarPlugins"
+[events]="[
+{
+  date: '2019-11-07',
+  rendering: 'background',
+  eventBackgroundColor: '#378006'
+}
+]
+"
+
+></full-calendar>
 <p>calander-api works!</p>
