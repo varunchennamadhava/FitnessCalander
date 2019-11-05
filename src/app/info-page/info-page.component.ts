@@ -51,6 +51,7 @@ export class InfoPageComponent implements OnInit {
       weight: ['', Validators.compose([Validators.required, Validators.minLength(2)])],
     });
   }
+  //lol
 
   onSubmit(){
     this.route.navigateByUrl('/calander');
