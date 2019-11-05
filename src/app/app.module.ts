@@ -9,7 +9,7 @@ import { LoginComponent } from './login/login.component';
 import { InfoPageComponent } from './info-page/info-page.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import {Router } from '@angular/router';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +24,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     FullCalendarModule,
     BrowserAnimationsModule,
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+
   ],
   exports: [
     MaterialModule
