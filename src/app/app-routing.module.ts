@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/calander', pathMatch: 'full' },
+  { path: '', redirectTo: '/info-page', pathMatch: 'full' },
   { path: 'calander', component: CalanderAPIComponent, },
   { path: 'info-page', component: InfoPageComponent, },
 ];
