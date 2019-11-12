@@ -2,6 +2,7 @@ import { RouterModule } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import * as mysql from 'mysql';
 @Component({
   selector: 'app-info-page',
   templateUrl: './info-page.component.html',
@@ -38,7 +39,6 @@ export class InfoPageComponent implements OnInit {
   public onePoundPerWeek(bmr: number) {
     return (bmr * (1.464857651246)) - 500;
   }
-
 
 
   buildForm() {
