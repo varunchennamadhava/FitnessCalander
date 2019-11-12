@@ -9,6 +9,8 @@ import { LoginComponent } from './login/login.component';
 import { InfoPageComponent } from './info-page/info-page.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { NgxTimelineModule } from 'ngx-timeline';
 
 @NgModule({
   declarations: [
@@ -17,14 +19,16 @@ import { ReactiveFormsModule } from '@angular/forms';
     LoginComponent,
     InfoPageComponent
   ],
-  //hi
+
   imports: [
     BrowserModule,
     AppRoutingModule,
     FullCalendarModule,
     BrowserAnimationsModule,
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule,
+    NgxTimelineModule
   ],
   exports: [
     MaterialModule

@@ -1,5 +1,7 @@
+import { ApiService } from './../api.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { Policy } from '../policy';
 @Component({
   selector: 'app-info-page',
   templateUrl: './info-page.component.html',
@@ -8,9 +10,14 @@ import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 export class InfoPageComponent implements OnInit {
 
   infoForm: FormGroup;
+  policyForm: FormGroup;
+  policies:  Policy[];
+  selectedPolicy:  Policy  = { id :  null , number:null, amount:  null};
+
 
   constructor(
     private formBuilder: FormBuilder,
+    private apiService: ApiService
   ) {
     this.buildForm();
   }
@@ -45,6 +52,12 @@ export class InfoPageComponent implements OnInit {
       height: ['', Validators.required],
       weight: ['', Validators.required],
     });
+
+    this.policyForm = this.formBuilder.group({
+      id: [null, Validators.required],
+      number: [null, Validators.required],
+      amount: [null, Validators.required],
+    });
   }
 
   onSubmit(){
@@ -53,6 +66,36 @@ export class InfoPageComponent implements OnInit {
 
   ngOnInit() {
     this.buildForm();
+    this.apiService.readPolicies().subscribe((policies: Policy[])=>{
+      this.policies = policies;
+      console.log(this.policies);
+    });
+  }
+
+  createOrUpdatePolicy(form){
+    if(this.policyForm && this.policyForm.value.id){
+      form.value.id = this.selectedPolicy.id;
+      this.apiService.updatePolicy(form.value).subscribe((policy: Policy)=>{
+        console.log("Policy updated" , policy);
+      });
+    }
+    else{
+
+      this.apiService.createPolicy(form.value).subscribe((policy: Policy)=>{
+        console.log("Policy created, ", policy);
+      });
+    }
+
+  }
+
+  selectPolicy(policy: Policy){
+    this.selectedPolicy = policy;
+  }
+
+  deletePolicy(id){
+    this.apiService.deletePolicy(id).subscribe((policy: Policy)=>{
+      console.log("Policy deleted, ", policy);
+    });
   }
 
 }
