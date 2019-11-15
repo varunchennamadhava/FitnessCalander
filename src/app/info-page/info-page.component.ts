@@ -99,8 +99,8 @@ export class InfoPageComponent implements OnInit {
       console.log(this.userTable);
     });
 
-
-    this.apiService.readUsername().subscribe((usernameTable: Username[]) => {
+    console.log('Main: ');
+    this.apiService.readUsername(2).subscribe((usernameTable: Username[]) => {
       this.usernameTable = usernameTable;
       console.log(this.usernameTable);
     });

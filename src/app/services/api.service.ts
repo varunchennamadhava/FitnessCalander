@@ -22,8 +22,8 @@ export class ApiService {
     return this.httpClient.get<User[]>(`${this.PHP_API_SERVER}/api/read_user.php`);
   }
 
-  readUsername(): Observable<Username[]> {
-    return this.httpClient.get<Username[]>(`${this.PHP_API_SERVER}/api/read_username.php`);
+  readUsername(id: number): Observable<Username[]> {
+    return this.httpClient.get<Username[]>(`${this.PHP_API_SERVER}/api/read_username.php/?id=${id}`);
   }
 
   createPolicy(policy: Policy): Observable<Policy> {
