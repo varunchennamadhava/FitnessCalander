@@ -5,7 +5,7 @@
 require 'database.php';
 
 $policies = [];
-$sql = "SELECT id, number, amount FROM policies";
+$sql = "SELECT * FROM policies";
 
 if($result = mysqli_query($con,$sql))
 {

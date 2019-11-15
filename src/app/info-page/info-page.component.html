@@ -46,9 +46,30 @@
     <input type="button" (click)="createOrUpdatePolicy(policyForm)" value="Create or Update Policy">
   </form>
 
-  <div *ngFor = "let policy of policies">
+  <br>
+  <form [formGroup] = "userForm">
+    <mat-form-field appearance = "outline">
+      <input matInput placeholder = "Username" name="username" formControlName = "username">
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance = "outline">
+        <input matInput placeholder = "Birthday" name="birthday" formControlName = "birthday">
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance = "outline">
+        <input matInput placeholder = "Height" name="height" formControlName = "height">
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance = "outline">
+        <input matInput placeholder = "Gender" name="gender" formControlName = "gender">
+      </mat-form-field>
+    <br>
+    <input type="button" (click)="createUser(userForm)" value="Create or Update Policy">
+  </form>
+
+  <!-- <div *ngFor = "let policy of policies">
     <h1>{{ policy.id }}</h1>
     <h1>{{ policy.number }}</h1>
     <h1>{{ policy.amount }}</h1>
 
-  </div>
+  </div> -->

@@ -1,7 +1,8 @@
-import { ApiService } from './../api.service';
+import { User } from './../models/user';
+import { ApiService } from '../services/api.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
-import { Policy } from '../policy';
+import { Policy } from '../models/policy';
 @Component({
   selector: 'app-info-page',
   templateUrl: './info-page.component.html',
@@ -11,8 +12,12 @@ export class InfoPageComponent implements OnInit {
 
   infoForm: FormGroup;
   policyForm: FormGroup;
-  policies:  Policy[];
-  selectedPolicy:  Policy  = { id :  null , number:null, amount:  null};
+  policies: Policy[];
+  selectedPolicy: Policy  = { id :  null , number:null, amount:  null};
+
+  userForm: FormGroup;
+  userTable: User[];
+  selectedUser: User  = { userId : null , username: null, birthday:  null, height: null, gender: null};
 
 
   constructor(
@@ -58,6 +63,14 @@ export class InfoPageComponent implements OnInit {
       number: [null, Validators.required],
       amount: [null, Validators.required],
     });
+
+    this.userForm = this.formBuilder.group({
+      id: [null, Validators.required],
+      username: [null, Validators.required],
+      birthday: [null, Validators.required],
+      height: [null, Validators.required],
+      gender: [null, Validators.required],
+    });
   }
 
   onSubmit(){
@@ -66,9 +79,14 @@ export class InfoPageComponent implements OnInit {
 
   ngOnInit() {
     this.buildForm();
-    this.apiService.readPolicies().subscribe((policies: Policy[])=>{
+    this.apiService.readPolicies().subscribe((policies: Policy[]) => {
       this.policies = policies;
       console.log(this.policies);
+    });
+
+    this.apiService.readUserTable().subscribe((userTable: User[]) => {
+      this.userTable = userTable;
+      console.log(this.userTable);
     });
   }
 
@@ -85,6 +103,12 @@ export class InfoPageComponent implements OnInit {
         console.log("Policy created, ", policy);
       });
     }
+  }
+
+  createUser(form){
+      this.apiService.createUserTable(form.value).subscribe((userTable: User) => {
+        console.log("User created, ", userTable);
+      });
 
   }
 

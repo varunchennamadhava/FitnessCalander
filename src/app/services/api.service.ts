@@ -1,6 +1,7 @@
+import { User } from './../models/user';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Policy } from './policy';
+import { Policy } from '../models/policy';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -12,15 +13,23 @@ export class ApiService {
 
   constructor(private httpClient: HttpClient) { }
 
-  readPolicies(): Observable<Policy[]>{
+  readPolicies(): Observable<Policy[]> {
     return this.httpClient.get<Policy[]>(`${this.PHP_API_SERVER}/api/read.php`);
   }
 
-  createPolicy(policy: Policy): Observable<Policy>{
+  readUserTable(): Observable<User[]> {
+    return this.httpClient.get<User[]>(`${this.PHP_API_SERVER}/api/read_user.php`);
+  }
+
+  createPolicy(policy: Policy): Observable<Policy> {
     return this.httpClient.post<Policy>(`${this.PHP_API_SERVER}/api/create.php`, policy);
   }
 
-  updatePolicy(policy: Policy){
+  createUserTable(user: User): Observable<User> {
+    return this.httpClient.post<User>(`${this.PHP_API_SERVER}/api/create_user.php`, user);
+  }
+
+  updatePolicy(policy: Policy) {
     return this.httpClient.put<Policy>(`${this.PHP_API_SERVER}/api/update.php`, policy);
   }
 

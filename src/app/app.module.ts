@@ -12,6 +12,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxTimelineModule } from 'ngx-timeline';
 
+//php -S 127.0.0.1:8080 -t .\backend\
+
 @NgModule({
   declarations: [
     AppComponent,
