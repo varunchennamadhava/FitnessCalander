@@ -33,7 +33,15 @@ export class ApiService {
     return this.httpClient.put<Policy>(`${this.PHP_API_SERVER}/api/update.php`, policy);
   }
 
+  updateUser(user: User) {
+    return this.httpClient.put<User>(`${this.PHP_API_SERVER}/api/update_user.php`, user);
+  }
+
   deletePolicy(id: number){
     return this.httpClient.delete<Policy>(`${this.PHP_API_SERVER}/api/delete.php/?id=${id}`);
+  }
+
+  deleteUser(id: number){
+    return this.httpClient.delete<User>(`${this.PHP_API_SERVER}/api/delete_user.php/?id=${id}`);
   }
 }

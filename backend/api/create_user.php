@@ -24,19 +24,19 @@ if(isset($postdata) && !empty($postdata))
 
 
   // Create.
-  $sql = "INSERT INTO `user_table`(`id`,`username`,`birthday`,'height','gender') VALUES (null,'{$username}','{$birthday}','{$height}','{$gender}')";
+  $sql = "INSERT INTO `user_table`(`user_id`,`username`,`birthday`,`height`,`gender`) VALUES (null,'{$username}','{$birthday}','{$height}','{$gender}')";
 
   if(mysqli_query($con,$sql))
   {
     http_response_code(201);
-    $user = [
+    $user_table = [
       'username' => $username,
       'birthday' => $birthday,
       'height' => $height,
       'gender' => $gender,
-      'id'    => mysqli_insert_id($con)
+      'user_id'    => mysqli_insert_id($con)
     ];
-    echo json_encode($user);
+    echo json_encode($user_table);
   }
   else
   {

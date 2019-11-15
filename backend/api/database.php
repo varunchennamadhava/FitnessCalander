@@ -6,7 +6,7 @@ header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Ac
 define('DB_HOST', 'localhost');
 define('DB_USER', 'root');
 define('DB_PASS', 'pringles');
-define('DB_NAME', 'timeline');
+define('DB_NAME', 'mydb');
 
 function connect()
 {

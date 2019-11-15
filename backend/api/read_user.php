@@ -12,7 +12,7 @@ if($result = mysqli_query($con,$sql))
   $i = 0;
   while($row = mysqli_fetch_assoc($result))
   {
-    $user_table[$i]['id']    = $row['id'];
+    $user_table[$i]['user_id']    = $row['user_id'];
     $user_table[$i]['username'] = $row['username'];
     $user_table[$i]['birthday'] = $row['birthday'];
     $user_table[$i]['height'] = $row['height'];

@@ -64,8 +64,46 @@
         <input matInput placeholder = "Gender" name="gender" formControlName = "gender">
       </mat-form-field>
     <br>
-    <input type="button" (click)="createUser(userForm)" value="Create or Update Policy">
+    <input type="button" (click)="createorUpdateUser(userForm)" value="Create or Update Policy">
   </form>
+
+  <br>
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <ng-container matColumnDef="username">
+          <th class = 'font padding-left' style= "background-color: #f5f5f5" mat-header-cell *matHeaderCellDef><p class = 'header-padding'> Username </p></th>
+          <td mat-cell *matCellDef="let element" class='cell-style'> {{element.username}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="birthday">
+            <th class = 'font padding-left' style= "background-color: #f5f5f5" mat-header-cell *matHeaderCellDef><p class = 'header-padding'>Birthday</p></th>
+            <td mat-cell *matCellDef="let element" class='cell-style'> {{element.birthday}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="height">
+              <th class = 'font padding-left' style= "background-color: #f5f5f5" mat-header-cell *matHeaderCellDef><p class = 'header-padding'>Height</p></th>
+              <td mat-cell *matCellDef="let element" class='cell-style'> {{element.height}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="gender">
+                <th class = 'font padding-left' style= "background-color: #f5f5f5" mat-header-cell *matHeaderCellDef><p class = 'header-padding'>Gender</p></th>
+                <td mat-cell *matCellDef="let element" class='cell-style'> {{element.gender}} </td>
+              </ng-container>
+
+        <ng-container matColumnDef="actions">
+            <th class = 'font padding-left' style= "background-color: #d8d8d8" mat-header-cell *matHeaderCellDef><p class = 'header-padding'>Actions</p></th>
+            <td mat-cell *matCellDef="let element" class='cell-style'>
+                <button mat-icon-button matTooltip="Edit" (click)="createorUpdateUser(element)">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                  <button mat-icon-button matTooltip="Delete" (click)="deleteUser(element.userId)">
+                    <mat-icon color="warn">delete</mat-icon>
+                  </button>
+            </td>
+          </ng-container>
+
+        <tr style= "background-color: #d8d8d8"mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
 
   <!-- <div *ngFor = "let policy of policies">
     <h1>{{ policy.id }}</h1>
