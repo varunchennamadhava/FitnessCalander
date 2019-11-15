@@ -1,3 +1,4 @@
+import { Username } from './../models/username';
 import { User } from './../models/user';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -19,6 +20,10 @@ export class ApiService {
 
   readUserTable(): Observable<User[]> {
     return this.httpClient.get<User[]>(`${this.PHP_API_SERVER}/api/read_user.php`);
+  }
+
+  readUsername(): Observable<Username[]> {
+    return this.httpClient.get<Username[]>(`${this.PHP_API_SERVER}/api/read_username.php`);
   }
 
   createPolicy(policy: Policy): Observable<Policy> {

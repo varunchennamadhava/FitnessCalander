@@ -1,3 +1,4 @@
+import { Username } from './../models/username';
 import { User } from './../models/user';
 import { ApiService } from '../services/api.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
@@ -17,7 +18,7 @@ export class InfoPageComponent implements OnInit {
   dataSource: MatTableDataSource<User>;
   displayedColumns = ['username', 'birthday', 'height', 'gender', 'actions'];
 
-
+  usernameTable: Username[];
 
   policyForm: FormGroup;
   policies: Policy[];
@@ -96,6 +97,12 @@ export class InfoPageComponent implements OnInit {
     this.apiService.readUserTable().subscribe((userTable: User[]) => {
       this.userTable = userTable;
       console.log(this.userTable);
+    });
+
+
+    this.apiService.readUsername().subscribe((usernameTable: Username[]) => {
+      this.usernameTable = usernameTable;
+      console.log(this.usernameTable);
     });
   }
 
