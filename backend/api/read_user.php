@@ -15,7 +15,6 @@ if($result = mysqli_query($con,$sql))
     $user_table[$i]['user_id']    = $row['user_id'];
     $user_table[$i]['username'] = $row['username'];
     $user_table[$i]['birthday'] = $row['birthday'];
-    $user_table[$i]['height'] = $row['height'];
     $user_table[$i]['gender'] = $row['gender'];
     $i++;
   }

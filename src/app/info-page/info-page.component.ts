@@ -26,7 +26,7 @@ export class InfoPageComponent implements OnInit {
 
   userForm: FormGroup;
   userTable: User[];
-  selectedUser: User  = { userId : null , username: null, birthday:  null, height: null, gender: null};
+  selectedUser: User  = { userId : null , username: null, birthday:  null, gender: null};
 
 
   constructor(
@@ -78,7 +78,6 @@ export class InfoPageComponent implements OnInit {
       id: [null, Validators.required],
       username: [null, Validators.required],
       birthday: [null, Validators.required],
-      height: [null, Validators.required],
       gender: [null, Validators.required],
     });
   }
@@ -89,11 +88,11 @@ export class InfoPageComponent implements OnInit {
 
   ngOnInit() {
     this.buildForm();
-    this.apiService.readPolicies().subscribe((policies: Policy[]) => {
-      this.policies = policies;
-      console.log(this.policies);
-    });
-
+    // this.apiService.readPolicies().subscribe((policies: Policy[]) => {
+    //   this.policies = policies;
+    //   console.log(this.policies);
+    // });
+    console.log('User Table: ');
     this.apiService.readUserTable().subscribe((userTable: User[]) => {
       this.userTable = userTable;
       console.log(this.userTable);
