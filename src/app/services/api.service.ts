@@ -1,9 +1,12 @@
+import { Weight } from './../models/weight';
+import { Food } from './../models/food';
 import { Username } from './../models/username';
 import { User } from './../models/user';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Policy } from '../models/policy';
 import { Observable } from 'rxjs';
+import { Calorie } from './../models/calorie';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +25,18 @@ export class ApiService {
     return this.httpClient.get<User[]>(`${this.PHP_API_SERVER}/api/read_user.php`);
   }
 
+  readFoodTable(): Observable<Food[]> {
+    return this.httpClient.get<Food[]>(`${this.PHP_API_SERVER}/api/read_food.php`);
+  }
+
+  readWeightTable(): Observable<Weight[]> {
+    return this.httpClient.get<Weight[]>(`${this.PHP_API_SERVER}/api/read_weight.php`);
+  }
+
+  readCalorieTable(): Observable<Calorie[]> {
+    return this.httpClient.get<Calorie[]>(`${this.PHP_API_SERVER}/api/read_calorie.php`);
+  }
+
   readUsername(id: number): Observable<Username[]> {
     return this.httpClient.get<Username[]>(`${this.PHP_API_SERVER}/api/read_username.php/?id=${id}`);
   }
@@ -32,6 +47,11 @@ export class ApiService {
 
   createUserTable(user: User): Observable<User> {
     return this.httpClient.post<User>(`${this.PHP_API_SERVER}/api/create_user.php`, user);
+  }
+
+  createFoodTable(food: Food, id: number): Observable<Food> {
+    console.log(food);
+    return this.httpClient.post<Food>(`${this.PHP_API_SERVER}/api/create_food.php/?id=${id}`, food);
   }
 
   updatePolicy(policy: Policy) {

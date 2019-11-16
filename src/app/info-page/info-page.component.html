@@ -52,6 +52,25 @@
   </form>
 
   <br>
+  <form [formGroup] = "foodForm">
+    <mat-form-field appearance = "outline">
+      <input matInput placeholder = "Food Name" name="foodName" formControlName = "foodName">
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance = "outline">
+        <input matInput placeholder = "Amount of Calories" name="foodCalories" formControlName = "foodCalories">
+
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance = "outline">
+        <input matInput placeholder = "Date Eaten" name="timestamp" formControlName = "timestamp">
+        <mat-hint>YYYY-MM-DD</mat-hint>
+      </mat-form-field>
+    <br>
+    <button mat-raised-button mat-button color = "primary" (click) = "createFood(foodForm)">Submit</button>
+  </form>
+
+  <br>
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
       <ng-container matColumnDef="username">
           <th class = 'font padding-left' style= "background-color: #f5f5f5" mat-header-cell *matHeaderCellDef><p class = 'header-padding'> Username </p></th>

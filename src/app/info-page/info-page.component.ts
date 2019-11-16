@@ -1,3 +1,5 @@
+import { Weight } from './../models/weight';
+import { Food } from './../models/food';
 import { Username } from './../models/username';
 import { User } from './../models/user';
 import { ApiService } from '../services/api.service';
@@ -5,6 +7,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Policy } from '../models/policy';
 import { MatTableDataSource, MatPaginator, MatSort, } from '@angular/material';
+import { Calorie } from './../models/calorie';
+
 @Component({
   selector: 'app-info-page',
   templateUrl: './info-page.component.html',
@@ -28,6 +32,18 @@ export class InfoPageComponent implements OnInit {
   userTable: User[];
   selectedUser: User  = { userId : null , username: null, birthday:  null, gender: null};
 
+  foodForm: FormGroup;
+  foodTable: Food[];
+  selectedFood: Food  = { foodId : null , foodName: null, foodCalories:  null, timeStamp: null, userId: null};
+
+  weightForm: FormGroup;
+  weightTable: Weight[];
+  selectedWeight: Weight  = { weightId : null , height: null, weight: null, timeStamp: null, userId: null};
+
+  calorieForm: FormGroup;
+  calorieTable: Calorie[];
+  selecteCalorie: Calorie  = { calorieId : null , extreme: null, mild: null, noLoss: null, userId: null};
+
 
   constructor(
     private formBuilder: FormBuilder,
@@ -42,6 +58,7 @@ export class InfoPageComponent implements OnInit {
   age: number;
   gender: boolean;
   BMR: number;
+  userId: number;
 
   //Male and Female
   //Male = true
@@ -80,6 +97,30 @@ export class InfoPageComponent implements OnInit {
       birthday: [null, Validators.required],
       gender: [null, Validators.required],
     });
+
+    this.foodForm = this.formBuilder.group({
+      id: [null, Validators.required],
+      foodName: [null, Validators.required],
+      foodCalories: [null, Validators.required],
+      timestamp: [null, Validators.required],
+      userId: [null, Validators.required],
+    });
+
+    this.weightForm = this.formBuilder.group({
+      id: [null, Validators.required],
+      weight: [null, Validators.required],
+      height: [null, Validators.required],
+      timestamp: [null, Validators.required],
+      userId: [null, Validators.required],
+    });
+
+    this.calorieForm = this.formBuilder.group({
+      id: [null, Validators.required],
+      extreme: [null, Validators.required],
+      mild: [null, Validators.required],
+      noLoss: [null, Validators.required],
+      userId: [null, Validators.required],
+    });
   }
 
   onSubmit(){
@@ -92,17 +133,37 @@ export class InfoPageComponent implements OnInit {
     //   this.policies = policies;
     //   console.log(this.policies);
     // });
-    console.log('User Table: ');
     this.apiService.readUserTable().subscribe((userTable: User[]) => {
+      console.log('User Table: ');
       this.userTable = userTable;
       console.log(this.userTable);
     });
 
-    console.log('Main: ');
+    this.apiService.readFoodTable().subscribe((foodTable: Food[]) => {
+      console.log('Food Table: ');
+      this.foodTable = foodTable;
+      console.log(this.foodTable);
+    });
+
+    this.apiService.readWeightTable().subscribe((weightTable: Weight[]) => {
+      console.log('Weight Table: ');
+      this.weightTable = weightTable;
+      console.log(this.weightTable);
+    });
+
+    this.apiService.readCalorieTable().subscribe((calorieTable: Calorie[]) => {
+      console.log('Calorie Table: ');
+      this.calorieTable = calorieTable;
+      console.log(this.calorieTable);
+    });
+
     this.apiService.readUsername(2).subscribe((usernameTable: Username[]) => {
+      console.log('Main: ');
       this.usernameTable = usernameTable;
       console.log(this.usernameTable);
     });
+
+    this.userId = 1;
   }
 
   ngAfterViewInit() {
@@ -137,6 +198,13 @@ export class InfoPageComponent implements OnInit {
         console.log("User created, ", userTable);
       });
     }
+  }
+
+  createFood(form) {
+    console.log(form.value);
+    this.apiService.createFoodTable(form.value, this.userId).subscribe((foodTable: Food) => {
+      console.log("Food created, ", foodTable);
+    });
   }
 
   selectPolicy(policy: Policy){
