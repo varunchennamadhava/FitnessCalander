@@ -14,7 +14,7 @@ if($result = mysqli_query($con,$sql))
   {
     $food_table[$i]['food_id']    = $row['food_id'];
     $food_table[$i]['food_name'] = $row['food_name'];
-    $food_table[$i]['food_calorie'] = $row['food_calorie'];
+    $food_table[$i]['food_calories'] = $row['food_calories'];
     $food_table[$i]['timestamp'] = $row['timestamp'];
     $food_table[$i]['user_id'] = $row['user_id'];
     $i++;

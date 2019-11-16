@@ -20,7 +20,7 @@ export class InfoPageComponent implements OnInit {
 
   infoForm: FormGroup;
   dataSource: MatTableDataSource<User>;
-  displayedColumns = ['username', 'birthday', 'height', 'gender', 'actions'];
+  displayedColumns = ['foodName', 'foodCalories', 'timestamp', 'actions'];
 
   usernameTable: Username[];
 
@@ -34,7 +34,7 @@ export class InfoPageComponent implements OnInit {
 
   foodForm: FormGroup;
   foodTable: Food[];
-  selectedFood: Food  = { foodId : null , foodName: null, foodCalories:  null, timeStamp: null, userId: null};
+  selectedFood: Food  = { foodId : null , foodName: null, foodCalories:  null, timestamp: null, userId: null};
 
   weightForm: FormGroup;
   weightTable: Weight[];

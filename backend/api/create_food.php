@@ -20,6 +20,8 @@ if(isset($postdata) && !empty($postdata))
   // Sanitize.
   $foodName = mysqli_real_escape_string($con, trim($request->foodName));
   $foodCalories = mysqli_real_escape_string($con, trim((int)$request->foodCalories));
+  $timestamp= mysqli_real_escape_string($con, trim($request->timestamp));
+
 
 
   // Create.
