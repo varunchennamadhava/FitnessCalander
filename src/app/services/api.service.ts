@@ -84,7 +84,7 @@ export class ApiService {
     const params = new HttpParams()
       .set('id', id.toString());
 
-    return this.httpClient.delete(`${this.PHP_API_SERVER}/delete_food`, { params: params })
+    return this.httpClient.delete(`${this.PHP_API_SERVER}/api/delete_food.php/`, { params: params })
       .pipe(map(res => {
         const filteredFoods = this.foods.filter((food) => {
           return +food['id'] !== +id;

@@ -11,7 +11,7 @@ if(!$id)
 }
 
 // Delete.
-$sql = "DELETE FROM `food_table` WHERE `id` ='{$id}' LIMIT 1";
+$sql = "DELETE FROM `food_table` WHERE `food_id` ='{$id}' LIMIT 1";
 
 if(mysqli_query($con, $sql))
 {
