@@ -209,6 +209,13 @@ export class InfoPageComponent implements OnInit {
     });
   }
 
+  createWeight(form) {
+    console.log(form.value);
+    this.apiService.createWeightTable(form.value, this.userId).subscribe((weightTable: Weight) => {
+      console.log("Food created, ", weightTable);
+    });
+  }
+
   selectPolicy(policy: Policy){
     this.selectedPolicy = policy;
   }

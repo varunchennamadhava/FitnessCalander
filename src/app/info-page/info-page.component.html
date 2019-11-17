@@ -71,6 +71,26 @@
   </form>
 
   <br>
+  <form [formGroup] = "weightForm">
+    <mat-form-field appearance = "outline">
+      <input matInput placeholder = "Weight" name="weight" formControlName = "weight">
+      <mat-hint>In Pounds</mat-hint>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance = "outline">
+        <input matInput placeholder = "Height" name="height" formControlName = "height">
+        <mat-hint>In Inches</mat-hint>
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance = "outline">
+        <input matInput placeholder = "Date" name="timestamp" formControlName = "timestamp">
+        <mat-hint>YYYY-MM-DD</mat-hint>
+      </mat-form-field>
+    <br>
+    <button mat-raised-button mat-button color = "primary" (click) = "createWeight(weightForm)">Submit</button>
+  </form>
+
+  <br>
   <table mat-table [dataSource]="foodTable" class="mat-elevation-z8">
       <ng-container matColumnDef="foodName">
           <th class = 'font padding-left' style= "background-color: #f5f5f5" mat-header-cell *matHeaderCellDef><p class = 'header-padding'> Food Name </p></th>

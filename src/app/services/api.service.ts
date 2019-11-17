@@ -64,6 +64,10 @@ export class ApiService {
     return this.httpClient.post<Food>(`${this.PHP_API_SERVER}/api/create_food.php/?id=${id}`, food);
   }
 
+  createWeightTable(weight: Weight, id: number): Observable<Weight> {
+    return this.httpClient.post<Weight>(`${this.PHP_API_SERVER}/api/create_weight.php/?id=${id}`, weight);
+  }
+
   updatePolicy(policy: Policy) {
     return this.httpClient.put<Policy>(`${this.PHP_API_SERVER}/api/update.php`, policy);
   }
