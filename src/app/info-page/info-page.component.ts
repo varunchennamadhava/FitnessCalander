@@ -59,6 +59,8 @@ export class InfoPageComponent implements OnInit {
   gender: boolean;
   BMR: number;
   userId: number;
+  success: string;
+  error: string;
 
   //Male and Female
   //Male = true
@@ -222,5 +224,19 @@ export class InfoPageComponent implements OnInit {
       console.log("User deleted, ", user);
     });
   }
+
+  deleteFood(id) {
+    this.success = '';
+    this.error   = '';
+
+    this.apiService.deleteFood(+id)
+      .subscribe(
+        (res: Food[]) => {
+          this.foodTable = res;
+          this.success = 'Deleted successfully';
+        },
+        (err) => this.error = err
+      );
+}
 
 }

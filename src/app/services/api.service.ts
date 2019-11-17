@@ -3,10 +3,11 @@ import { Food } from './../models/food';
 import { Username } from './../models/username';
 import { User } from './../models/user';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Policy } from '../models/policy';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { Calorie } from './../models/calorie';
+import { map, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,15 @@ export class ApiService {
   PHP_API_SERVER = "http://127.0.0.1:8080";
 
   constructor(private httpClient: HttpClient) { }
+
+  foods: Food[];
+
+  private handleError(error: HttpErrorResponse) {
+  console.log(error);
+
+  // return an observable with a user friendly message
+  return throwError('Error! something went wrong.');
+}
 
   readPolicies(): Observable<Policy[]> {
     return this.httpClient.get<Policy[]>(`${this.PHP_API_SERVER}/api/read.php`);
@@ -69,4 +79,18 @@ export class ApiService {
   deleteUser(id: number){
     return this.httpClient.delete<User>(`${this.PHP_API_SERVER}/api/delete_user.php/?id=${id}`);
   }
+
+  deleteFood(id: number): Observable<Food[]> {
+    const params = new HttpParams()
+      .set('id', id.toString());
+
+    return this.httpClient.delete(`${this.PHP_API_SERVER}/delete_food`, { params: params })
+      .pipe(map(res => {
+        const filteredFoods = this.foods.filter((food) => {
+          return +food['id'] !== +id;
+        });
+        return this.foods = filteredFoods;
+      }),
+      catchError(this.handleError));
+}
 }
