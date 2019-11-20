@@ -141,7 +141,7 @@ export class InfoPageComponent implements OnInit {
       console.log(this.userTable);
     });
 
-    this.apiService.readFoodTable().subscribe((foodTable: Food[]) => {
+    this.apiService.readFoodTableById(2).subscribe((foodTable: Food[]) => {
       console.log('Food Table: ');
       this.foodTable = foodTable;
       console.log(this.foodTable);
@@ -164,6 +164,7 @@ export class InfoPageComponent implements OnInit {
       this.usernameTable = usernameTable;
       console.log(this.usernameTable);
     });
+
 
     this.userId = 1;
   }

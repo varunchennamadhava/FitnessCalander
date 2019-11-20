@@ -4,11 +4,9 @@ require 'database.php';
 // Get the posted data.
 $postdata = file_get_contents("php://input");
 
-console.log("1");
 
 if(isset($postdata) && !empty($postdata))
 {
-  console.log("2");
   // Extract the data.
   $request = json_decode($postdata);
 //h

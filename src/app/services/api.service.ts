@@ -39,6 +39,10 @@ export class ApiService {
     return this.httpClient.get<Food[]>(`${this.PHP_API_SERVER}/api/read_food.php`);
   }
 
+  readFoodTableById(id: number): Observable<Food[]> {
+    return this.httpClient.get<Food[]>(`${this.PHP_API_SERVER}/api/read_food_by_id.php/?id=${id}`);
+  }
+
   readWeightTable(): Observable<Weight[]> {
     return this.httpClient.get<Weight[]>(`${this.PHP_API_SERVER}/api/read_weight.php`);
   }
@@ -83,6 +87,8 @@ export class ApiService {
   deleteUser(id: number){
     return this.httpClient.delete<User>(`${this.PHP_API_SERVER}/api/delete_user.php/?id=${id}`);
   }
+
+
 
   deleteFood(id: number): Observable<Food[]> {
     const params = new HttpParams()
