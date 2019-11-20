@@ -13,6 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgxTimelineModule } from 'ngx-timeline';
 
 //php -S 127.0.0.1:8080 -t .\backend\
+//php -S 127.0.0.1:8080 -t ./backend varun
 
 @NgModule({
   declarations: [

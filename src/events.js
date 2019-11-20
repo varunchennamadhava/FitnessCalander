@@ -16,6 +16,7 @@ function createRouter(db) {
           res.status(500).json({status: 'error'});
         } else {
           res.status(200).json({status: 'ok'});
+          console.log("hibgyu");
         }
       }
     );
@@ -31,6 +32,7 @@ function createRouter(db) {
           res.status(500).json({status: 'error'});
         } else {
           res.status(200).json(results);
+          console.log("hibgyu");
         }
       }
     );
@@ -44,6 +46,7 @@ function createRouter(db) {
         if (error) {
           res.status(500).json({status: 'error'});
         } else {
+          console.log("hibgyu");
           res.status(200).json({status: 'ok'});
         }
       }
