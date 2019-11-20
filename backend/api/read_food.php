@@ -6,7 +6,7 @@ require 'database.php';
 
 $food_table = [];
 $sql = "SELECT * FROM food_table";
-
+//hi
 if($result = mysqli_query($con,$sql))
 {
   $i = 0;
