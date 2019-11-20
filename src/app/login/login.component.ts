@@ -16,7 +16,6 @@ export class LoginComponent implements OnInit {
   usernameMain: string;
   loginForm: FormGroup;
 
-
   ngOnInit() {
     this.buildForm();
   }
@@ -28,14 +27,11 @@ export class LoginComponent implements OnInit {
     });
   }
 
-
   submitLoginForm() {
     console.log(this.loginForm.value);
     console.log(this.loginForm.controls['user_name'].value);
     this.usernameMain = this.loginForm.controls['user_name'].value;
     console.log('usernameMain is:  ' + this.usernameMain);
-    //this.route.navigateByUrl('/calander');
     this.route.navigate(['/calander'], { queryParams: { useridMain: this.usernameMain } });
-
   }
 }
