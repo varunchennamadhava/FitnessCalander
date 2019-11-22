@@ -290,4 +290,8 @@ deleteWeight(id) {
     );
 }
 
+goToCalander() {
+  this.router.navigate(['/calander'], { queryParams: { useridMain: this.userId } });
+}
+
 }

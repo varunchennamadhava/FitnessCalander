@@ -1,5 +1,7 @@
-<button mat-raised-button mat-button color = "primary" (click) = "goToInfoPage()">Go To Info Page</button>
-
+<div fxLayout="row" fxLayoutAlign="space-between center" >
+<button mat-raised-button mat-button class = "info-btn" color = "primary" (click) = "goToInfoPage()">Go To Info Page</button>
+<button mat-raised-button mat-button class = "logout-btn" color = "primary" (click) = "logOut()">Log Out</button>
+</div>
 
 <full-calendar defaultView="dayGridMonth" [plugins]="calendarPlugins"
 [events]="[

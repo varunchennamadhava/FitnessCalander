@@ -1,3 +1,6 @@
+<div fxLayout="row" fxLayoutAlign="center center" class = "margin-above">
+    <div fxLayout="column" fxLayoutAlign="space-around center" >
+        <h1>Sign Up </h1>
 <form [formGroup] = "userForm">
   <mat-form-field appearance = "outline">
       <mat-label>Username</mat-label>
@@ -21,7 +24,12 @@
           </mat-option>
         </mat-select>
     </mat-form-field>
-  <br>
-  <button mat-raised-button mat-button color = "primary" (click) = "createorUpdateUser(userForm)">Submit</button>
-  <button mat-raised-button mat-button color = "primary" (click) = "goToLoginPage()">Back</button>
-</form>
+  </form>
+
+  <div fxLayout="row" fxLayoutAlign="center center" >
+  <button mat-raised-button mat-button class = "submit-btn" color = "primary" (click) = "createorUpdateUser(userForm)">Submit</button>
+  <button mat-raised-button mat-button class = "signup-btn" color = "primary" (click) = "goToLoginPage()">Back</button>
+  </div>
+
+</div>
+</div>

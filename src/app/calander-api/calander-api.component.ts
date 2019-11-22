@@ -30,4 +30,8 @@ export class CalanderAPIComponent implements OnInit {
     this.router.navigate(['/info-page'], { queryParams: { useridMain: this.userId } });
   }
 
+  logOut() {
+    this.router.navigate(['/login']);
+  }
+
 }

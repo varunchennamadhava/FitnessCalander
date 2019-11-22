@@ -12,6 +12,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxTimelineModule } from 'ngx-timeline';
 import { SignupComponent } from './signup/signup.component';
+import {FlexLayoutModule} from '@angular/flex-layout';
 
 //php -S 127.0.0.1:8080 -t .\backend\
 
@@ -32,7 +33,8 @@ import { SignupComponent } from './signup/signup.component';
     MaterialModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgxTimelineModule
+    NgxTimelineModule,
+    FlexLayoutModule
   ],
   exports: [
     MaterialModule
