@@ -1,0 +1,27 @@
+<form [formGroup] = "userForm">
+  <mat-form-field appearance = "outline">
+      <mat-label>Username</mat-label>
+    <input matInput placeholder = "Username" name="username" formControlName = "username">
+  </mat-form-field>
+  <br>
+  <mat-form-field appearance = "outline">
+      <mat-label>Birthday</mat-label>
+      <input matInput placeholder = "Birthday" name="birthday" formControlName = "birthday">
+      <mat-hint>YYYY-MM-DD</mat-hint>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance = "outline">
+      <mat-label>Gender</mat-label>
+      <mat-select formControlName = "gender">
+          <mat-option value = "M">
+            Male
+          </mat-option>
+          <mat-option value = "F">
+            Female
+          </mat-option>
+        </mat-select>
+    </mat-form-field>
+  <br>
+  <button mat-raised-button mat-button color = "primary" (click) = "createorUpdateUser(userForm)">Submit</button>
+  <button mat-raised-button mat-button color = "primary" (click) = "goToLoginPage()">Back</button>
+</form>

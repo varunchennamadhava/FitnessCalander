@@ -4,8 +4,9 @@
  */
 require 'database.php';
 
+$id = ($_GET['id'] !== null && (int)$_GET['id'] > 0)? mysqli_real_escape_string($con, (int)$_GET['id']) : false;
 $food_table = [];
-$sql = "SELECT * FROM food_table";
+$sql = "SELECT * FROM food_table WHERE user_id = {$id}";
 
 if($result = mysqli_query($con,$sql))
 {

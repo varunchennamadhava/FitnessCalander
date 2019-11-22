@@ -1,3 +1,4 @@
+import { Router, Params, ActivatedRoute } from '@angular/router';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FullCalendarComponent } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -8,8 +9,25 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 })
 export class CalanderAPIComponent implements OnInit {
 
-  calendarPlugins = [dayGridPlugin];
-  ngOnInit() {}
   calander: CalanderAPIComponent;
+  calendarPlugins = [dayGridPlugin];
+  userId: number;
+
+
+  constructor(private route: ActivatedRoute, private router: Router) {
+  }
+
+  ngOnInit() {
+    this.route.queryParams
+    .subscribe( params => {
+      console.log(params);
+      this.userId = params.useridMain;
+      console.log(this.userId);
+    });
+  }
+
+  goToInfoPage() {
+    this.router.navigate(['/info-page'], { queryParams: { useridMain: this.userId } });
+  }
 
 }

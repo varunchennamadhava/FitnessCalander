@@ -1,1 +1,10 @@
-<p>login works!</p>
+<h1>Login: </h1>
+<form [formGroup]="loginForm" >
+  <mat-form-field appearance = "outline">
+    <input matInput placeholder = "username" formControlName = "userName">
+  </mat-form-field>
+</form>
+<button mat-raised-button mat-button color = "primary" (click)="submitLoginForm()">Submit</button>
+<button mat-raised-button mat-button color = "primary" (click)="goToSignUp()">Sign Up</button>
+
+

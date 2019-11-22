@@ -1,3 +1,4 @@
+import { CalanderFood } from './../models/calanderFood';
 import { Weight } from './../models/weight';
 import { Food } from './../models/food';
 import { Username } from './../models/username';
@@ -8,7 +9,7 @@ import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Policy } from '../models/policy';
 import { MatTableDataSource, MatPaginator, MatSort, } from '@angular/material';
 import { Calorie } from './../models/calorie';
-
+import { Router, Params, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-info-page',
   templateUrl: './info-page.component.html',
@@ -21,16 +22,18 @@ export class InfoPageComponent implements OnInit {
   infoForm: FormGroup;
   dataSource: MatTableDataSource<User>;
   displayedColumns = ['foodName', 'foodCalories', 'timestamp', 'actions'];
+  displayWeights = ['weight', 'height', 'timestamp', 'actions'];
 
   usernameTable: Username[];
+  calanderTable: CalanderFood[];
 
   policyForm: FormGroup;
   policies: Policy[];
-  selectedPolicy: Policy  = { id :  null , number:null, amount:  null};
+  selectedPolicy: Policy  = { id :  null , number: null, amount:  null};
 
   userForm: FormGroup;
   userTable: User[];
-  selectedUser: User  = { userId : null , username: null, birthday:  null, gender: null};
+  selectedUser: User  = { user_id : null , username: null, birthday:  null, gender: null};
 
   foodForm: FormGroup;
   foodTable: Food[];
@@ -47,7 +50,9 @@ export class InfoPageComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     this.buildForm();
     this.dataSource = new MatTableDataSource();
@@ -61,6 +66,8 @@ export class InfoPageComponent implements OnInit {
   userId: number;
   success: string;
   error: string;
+  newdate: string;
+
 
   //Male and Female
   //Male = true
@@ -130,6 +137,13 @@ export class InfoPageComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.route.queryParams
+    .subscribe( params => {
+      console.log(params);
+      this.userId = params.useridMain;
+      console.log(this.userId);
+    });
+
     this.buildForm();
     // this.apiService.readPolicies().subscribe((policies: Policy[]) => {
     //   this.policies = policies;
@@ -141,13 +155,13 @@ export class InfoPageComponent implements OnInit {
       console.log(this.userTable);
     });
 
-    this.apiService.readFoodTable().subscribe((foodTable: Food[]) => {
+    this.apiService.readFoodTable(this.userId).subscribe((foodTable: Food[]) => {
       console.log('Food Table: ');
       this.foodTable = foodTable;
       console.log(this.foodTable);
     });
 
-    this.apiService.readWeightTable().subscribe((weightTable: Weight[]) => {
+    this.apiService.readWeightTable(this.userId).subscribe((weightTable: Weight[]) => {
       console.log('Weight Table: ');
       this.weightTable = weightTable;
       console.log(this.weightTable);
@@ -165,7 +179,23 @@ export class InfoPageComponent implements OnInit {
       console.log(this.usernameTable);
     });
 
-    this.userId = 1;
+    // this.apiService.readCalanderTable(this.userId).subscribe((calanderTable: CalanderFood[]) => {
+    //   console.log('Calander: ');
+    //   this.calanderTable = calanderTable;
+    //   console.log(this.calanderTable);
+    // });
+
+    var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1;
+    var day = dateObj.getDate();
+    var year = dateObj.getUTCFullYear();
+
+    this.newdate = year + "-" + month + "-" + day;
+
+    this.weightForm.patchValue({
+      timestamp: this.newdate
+    });
+
   }
 
   ngAfterViewInit() {
@@ -190,7 +220,7 @@ export class InfoPageComponent implements OnInit {
 
   createorUpdateUser(form){
     if(this.userForm && this.userForm.value.id){
-      form.value.id = this.selectedUser.userId;
+      form.value.id = this.selectedUser.user_id;
       this.apiService.updateUser(form.value).subscribe((user: User)=>{
         console.log("Policy updated" , user);
       });
@@ -244,6 +274,20 @@ export class InfoPageComponent implements OnInit {
         },
         (err) => this.error = err
       );
+}
+
+deleteWeight(id) {
+  this.success = '';
+  this.error   = '';
+
+  this.apiService.deleteWeight(+id)
+    .subscribe(
+      (res: Weight[]) => {
+        this.weightTable = res;
+        this.success = 'Deleted successfully';
+      },
+      (err) => this.error = err
+    );
 }
 
 }

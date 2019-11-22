@@ -11,6 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxTimelineModule } from 'ngx-timeline';
+import { SignupComponent } from './signup/signup.component';
 
 //php -S 127.0.0.1:8080 -t .\backend\
 
@@ -19,7 +20,8 @@ import { NgxTimelineModule } from 'ngx-timeline';
     AppComponent,
     CalanderAPIComponent,
     LoginComponent,
-    InfoPageComponent
+    InfoPageComponent,
+    SignupComponent
   ],
 
   imports: [

@@ -1,3 +1,4 @@
+import { CalanderFood } from './../models/calanderFood';
 import { Weight } from './../models/weight';
 import { Food } from './../models/food';
 import { Username } from './../models/username';
@@ -19,6 +20,7 @@ export class ApiService {
   constructor(private httpClient: HttpClient) { }
 
   foods: Food[];
+  weights: Weight[];
 
   private handleError(error: HttpErrorResponse) {
   console.log(error);
@@ -35,16 +37,20 @@ export class ApiService {
     return this.httpClient.get<User[]>(`${this.PHP_API_SERVER}/api/read_user.php`);
   }
 
-  readFoodTable(): Observable<Food[]> {
-    return this.httpClient.get<Food[]>(`${this.PHP_API_SERVER}/api/read_food.php`);
+  readFoodTable(id: number): Observable<Food[]> {
+    return this.httpClient.get<Food[]>(`${this.PHP_API_SERVER}/api/read_food.php/?id=${id}`);
   }
 
-  readWeightTable(): Observable<Weight[]> {
-    return this.httpClient.get<Weight[]>(`${this.PHP_API_SERVER}/api/read_weight.php`);
+  readWeightTable(id: number): Observable<Weight[]> {
+    return this.httpClient.get<Weight[]>(`${this.PHP_API_SERVER}/api/read_weight.php/?id=${id}`);
   }
 
   readCalorieTable(): Observable<Calorie[]> {
     return this.httpClient.get<Calorie[]>(`${this.PHP_API_SERVER}/api/read_calorie.php`);
+  }
+
+  readCalanderTable(id: number): Observable<CalanderFood[]> {
+    return this.httpClient.get<CalanderFood[]>(`${this.PHP_API_SERVER}/api/read_calander.php/?id=${id}`);
   }
 
   readUsername(id: number): Observable<Username[]> {
@@ -96,5 +102,19 @@ export class ApiService {
         return this.foods = filteredFoods;
       }),
       catchError(this.handleError));
+}
+
+deleteWeight(id: number): Observable<Weight[]> {
+  const params = new HttpParams()
+    .set('id', id.toString());
+
+  return this.httpClient.delete(`${this.PHP_API_SERVER}/api/delete_weight.php/`, { params: params })
+    .pipe(map(res => {
+      const filteredWeights = this.weights.filter((weight) => {
+        return +weight['id'] !== +id;
+      });
+      return this.weights = filteredWeights;
+    }),
+    catchError(this.handleError));
 }
 }

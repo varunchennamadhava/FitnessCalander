@@ -1,4 +1,4 @@
-<button mat-raised-button mat-button color = "primary" routerLink="/info-page">Go To Info Page</button>
+<button mat-raised-button mat-button color = "primary" (click) = "goToInfoPage()">Go To Info Page</button>
 
 
 <full-calendar defaultView="dayGridMonth" [plugins]="calendarPlugins"
@@ -12,4 +12,4 @@
 "
 
 ></full-calendar>
-<p>calander-api works!</p>
+
