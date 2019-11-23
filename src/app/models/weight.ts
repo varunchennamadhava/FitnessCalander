@@ -1,6 +1,6 @@
 export class Weight {
   weightId: number;
-  userId: number;
+  user_id: number;
   weight: number;
   height: number;
   timeStamp: Date;

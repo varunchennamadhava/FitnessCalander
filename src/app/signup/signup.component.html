@@ -26,8 +26,20 @@
     </mat-form-field>
   </form>
 
+  <form [formGroup] = "weightForm" class = "adjust">
+    <mat-form-field appearance = "outline">
+      <input matInput placeholder = "Weight" name="weight" formControlName = "weight">
+      <mat-hint>In Pounds</mat-hint>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance = "outline">
+        <input matInput placeholder = "Height" name="height" formControlName = "height">
+        <mat-hint>In Inches</mat-hint>
+      </mat-form-field>
+  </form>
+
   <div fxLayout="row" fxLayoutAlign="center center" >
-  <button mat-raised-button mat-button class = "submit-btn" color = "primary" (click) = "createorUpdateUser(userForm)">Submit</button>
+  <button mat-raised-button mat-button class = "submit-btn" color = "primary" (click) = "createorUpdateUser(userForm, weightForm)">Submit</button>
   <button mat-raised-button mat-button class = "signup-btn" color = "primary" (click) = "goToLoginPage()">Back</button>
   </div>
 

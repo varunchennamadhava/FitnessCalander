@@ -41,7 +41,7 @@ export class InfoPageComponent implements OnInit {
 
   weightForm: FormGroup;
   weightTable: Weight[];
-  selectedWeight: Weight  = { weightId : null , height: null, weight: null, timeStamp: null, userId: null};
+  selectedWeight: Weight  = { weightId : null , height: null, weight: null, timeStamp: null, user_id: null};
 
   calorieForm: FormGroup;
   calorieTable: Calorie[];
@@ -82,6 +82,14 @@ export class InfoPageComponent implements OnInit {
 
   public onePoundPerWeek(bmr: number) {
     return (bmr * (1.46)) - 500;
+  }
+
+  public twoPoundPerWeek(bmr: number) {
+    return (bmr * (1.46)) - 1000;
+  }
+
+  public maintainPoundPerWeek(bmr: number) {
+    return (bmr * (1.46));
   }
 
   buildForm() {
