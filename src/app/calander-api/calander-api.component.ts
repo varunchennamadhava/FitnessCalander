@@ -18,6 +18,7 @@ export class CalanderAPIComponent implements OnInit {
   calander: CalanderAPIComponent;
   calendarPlugins = [dayGridPlugin];
   userId: number;
+  newStringDate: string;
 
   foodForm: FormGroup;
   foodTable: Food[];
@@ -122,6 +123,15 @@ export class CalanderAPIComponent implements OnInit {
         let x = this.newArray[index].date;
         this.newArray[index].date = this.changeStringDashestoNoDashes(x);
       }
+      for(let indexCopy = 0; indexCopy < this.weightTable.length; indexCopy++) {
+        let xCopy = this.weightTable[indexCopy].timeStamp;
+        var month = xCopy.getUTCMonth() + 1;
+        var day = xCopy.getDate();
+        var year = xCopy.getUTCFullYear();
+
+        this.newStringDate = year + "-" + month +  "-" + day;
+        this.weightTable[indexCopy].timeStamp = this.changeStringDashestoNoDashes(this.newStringDate);
+      }
       console.log(this.newArray);
     }
 
@@ -142,12 +152,12 @@ export class CalanderAPIComponent implements OnInit {
       return this.BMR;
     }
 
-    public onePoundPerWeek(bmr: number) {
-      return (bmr * (1.46)) - 500;
-    }
-
     public twoPoundPerWeek(bmr: number) {
       return (bmr * (1.46)) - 1000;
+    }
+
+    public onePoundPerWeek(bmr: number) {
+      return (bmr * (1.46)) - 500;
     }
 
     public maintainPoundPerWeek(bmr: number) {

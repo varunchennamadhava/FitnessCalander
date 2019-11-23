@@ -58,15 +58,17 @@ export class InfoPageComponent implements OnInit {
     this.dataSource = new MatTableDataSource();
   }
 
+
+  userId: number;
+  success: string;
+  error: string;
+  newdate: string;
+
   weight: number;
   height: number;
   age: number;
   gender: boolean;
   BMR: number;
-  userId: number;
-  success: string;
-  error: string;
-  newdate: string;
 
 
   //Male and Female
