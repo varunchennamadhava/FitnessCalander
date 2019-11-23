@@ -1,7 +1,7 @@
 export class Food {
   foodId: number;
   foodName: string;
-  foodCalories: string;
+  food_calories: string;
   timestamp: Date;
   userId: number;
 }
