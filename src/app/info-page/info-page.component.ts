@@ -37,7 +37,7 @@ export class InfoPageComponent implements OnInit {
 
   foodForm: FormGroup;
   foodTable: Food[];
-  selectedFood: Food  = { foodId : null , foodName: null, foodCalories:  null, timestamp: null, userId: null};
+  selectedFood: Food  = { foodId : null , foodName: null, food_calories:  null, timestamp: null, userId: null};
 
   weightForm: FormGroup;
   weightTable: Weight[];
