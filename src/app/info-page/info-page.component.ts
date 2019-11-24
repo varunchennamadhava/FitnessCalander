@@ -63,7 +63,11 @@ export class InfoPageComponent implements OnInit {
   age: number;
   gender: boolean;
   BMR: number;
+
   userId: number;
+  userGender: string;
+  userAge: Date;
+
   success: string;
   error: string;
   newdate: string;
@@ -149,6 +153,8 @@ export class InfoPageComponent implements OnInit {
     .subscribe( params => {
       console.log(params);
       this.userId = params.useridMain;
+      this.userGender = params.userGender;
+      this.userAge = params.userAge;
       console.log(this.userId);
     });
 
@@ -299,7 +305,7 @@ deleteWeight(id) {
 }
 
 goToCalander() {
-  this.router.navigate(['/calander'], { queryParams: { useridMain: this.userId } });
+  this.router.navigate(['/calander'], { queryParams: { useridMain: this.userId, userGender: this.userGender, userAge: this.userAge } });
 }
 
 }
