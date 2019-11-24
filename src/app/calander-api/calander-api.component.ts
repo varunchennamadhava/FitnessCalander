@@ -76,7 +76,7 @@ export class CalanderAPIComponent implements OnInit {
       this.makeDate_Calories_Eaten_Table();
       this.takeOutDashes();
       this.newBirthday = this.calculateAge(this.birthday);
-      this.insertBMI();
+      this.insertToEvents();
    }, 1000);
   }
 
@@ -171,7 +171,7 @@ export class CalanderAPIComponent implements OnInit {
 
     }
 
-    public insertBMI() {
+    public insertToEvents() {
       for (let i = 0; i < this.newArray.length; i++) {
         for (let j = 0; j < this.newSubWeight.length -1; j++) {
         let firstIndex = 0;
@@ -202,7 +202,7 @@ export class CalanderAPIComponent implements OnInit {
           secIndex ++;
           continue;
         }
-        if (this.newArray[i].date > this.newSubWeight[secIndex].date){
+        if (this.newArray[i].date >= this.newSubWeight[secIndex].date){
 
           let height = this.newSubWeight[secIndex].height;
           let weight = this.newSubWeight[secIndex].weight;
