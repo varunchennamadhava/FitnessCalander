@@ -18,15 +18,18 @@ export class CalanderAPIComponent implements OnInit {
   calander: CalanderAPIComponent;
   calendarPlugins = [dayGridPlugin];
   userId: number;
+  birthday: Date;
+  newBirthday: number;
 
   weight: number;
   height: number;
   age: number;
-  gender: boolean;
+  gender: string;
   BMR: number;
 
   newArray = [];
   newSubWeight = [];
+  events = [];
 
   foodForm: FormGroup;
   foodTable: Food[];
@@ -49,6 +52,8 @@ export class CalanderAPIComponent implements OnInit {
     .subscribe( params => {
       console.log(params);
       this.userId = params.useridMain;
+      this.gender = params.userGender;
+      this.birthday = params.userAge;
       console.log(this.userId);
     });
 
@@ -70,6 +75,8 @@ export class CalanderAPIComponent implements OnInit {
     setTimeout (() => {
       this.makeDate_Calories_Eaten_Table();
       this.takeOutDashes();
+      this.newBirthday = this.calculateAge(this.birthday);
+      this.insertBMI();
    }, 1000);
   }
 
@@ -159,15 +166,99 @@ export class CalanderAPIComponent implements OnInit {
         let xCopy = this.newSubWeight[indexCopy].date;
         this.newSubWeight[indexCopy].date = this.changeStringDashestoNoDashes(xCopy);
       }
-      console.log(this.newArray);
+      console.log(this.newArray[0]);
+
+
+    }
+
+    public insertBMI() {
+      for (let i = 0; i < this.newArray.length; i++) {
+        for (let j = 0; j < this.newSubWeight.length -1; j++) {
+        let firstIndex = 0;
+        let secIndex = 1;
+        if (this.newArray[i].date >= this.newSubWeight[firstIndex].date && this.newArray[i].date < this.newSubWeight[secIndex].date) {
+          let height = this.newSubWeight[firstIndex].height;
+          let weight = this.newSubWeight[firstIndex].weight;
+          let BMR = this.calculateBMR(height, weight, this.newBirthday, this.gender);
+          let green = this.twoPoundPerWeek(BMR);
+          let lightGreen = this.onePoundPerWeek(BMR);
+          let yellow = this.maintainPoundPerWeek(BMR);
+
+          if (this.newArray[i].calories >= green) {
+            this.events.push({date: this.makeDateAgain(this.newSubWeight[firstIndex].date), rendering: 'background',
+            backgroundColor: '##00FF00'});
+          }
+          if ( lightGreen <= this.newArray[i].calories && this.newArray[i].calorie < green) {
+            this.events.push({date: this.makeDateAgain(this.newSubWeight[firstIndex].date), rendering: 'background',
+            backgroundColor: '#90ee90'});
+          }
+          if (yellow <= this.newArray[i].calories) {
+            this.events.push({date: this.makeDateAgain(this.newSubWeight[firstIndex].date), rendering: 'background',
+            backgroundColor: '#FFFF00'});
+          }
+        }
+        if (this.newArray[i].date < this.newSubWeight[firstIndex].date){
+          firstIndex ++;
+          secIndex ++;
+          continue;
+        }
+        if (this.newArray[i].date > this.newSubWeight[secIndex].date){
+
+          let height = this.newSubWeight[secIndex].height;
+          let weight = this.newSubWeight[secIndex].weight;
+          let BMR = this.calculateBMR(height, weight, this.newBirthday, this.gender);
+          let green = this.twoPoundPerWeek(BMR);
+          let lightGreen = this.onePoundPerWeek(BMR);
+          let yellow = this.maintainPoundPerWeek(BMR);
+
+          if (this.newArray[i].calories >= green) {
+            this.events.push({date: this.makeDateAgain(this.newSubWeight[secIndex].date), rendering: 'background',
+            backgroundColor: '##00FF00'});
+          }
+          if ( lightGreen <= this.newArray[i].calories && this.newArray[i].calorie < green) {
+            this.events.push({date: this.makeDateAgain(this.newSubWeight[secIndex].date), rendering: 'background',
+            backgroundColor: '#90ee90'});
+          }
+          if (yellow <= this.newArray[i].calories) {
+            this.events.push({date: this.makeDateAgain(this.newSubWeight[secIndex].date), rendering: 'background',
+            backgroundColor: '#FFFF00'});
+          }
+        }
+        firstIndex ++;
+        secIndex ++;
+      }
+      }
+      console.log(this.events);
+    }
+
+    public makeDateAgain(date: string) {
+      let result = [date[0]];
+      for (let x = 1; x < date.length; x++) {
+        if (x === 4 || x === 6) {
+          result.push('-',date[x]);
+        }
+        else {
+          result.push(date[x]);
+        }
+      }
+      return result.join('');
+    }
+
+    public calculateAge(birthday: Date) {
+      let newBirthday = new Date(birthday);
+      var ageDifMs = Date.now() - newBirthday.getTime();
+      var ageDate = new Date(ageDifMs); // miliseconds from epoch
+      return Math.abs(ageDate.getUTCFullYear() - 1970);
     }
 
     //Male and Female
     //Male = true
     //female = false
-    public calculateBMR(heightL: number, weightL: number, ageL: number, genderL: boolean) {
-      this.BMR = (10 * weightL) + (6.25 * heightL) - (5 * ageL);
-      if (genderL === false) {
+    public calculateBMR(heightL: number, weightL: number, ageL: number, genderL: string) {
+      if (genderL === 'M') {
+        this.BMR = (10 * weightL) + (6.25 * heightL) - (5 * ageL);
+      }
+      if (genderL === 'F') {
         this.BMR = (10 * weightL) + (6.25 * heightL) - (5 * ageL) - 161;
       }
       return this.BMR;

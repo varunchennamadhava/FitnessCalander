@@ -18,6 +18,8 @@ export class LoginComponent implements OnInit {
   usernameMain: string;
   userId: number;
   loginForm: FormGroup;
+  gender: string;
+  birthday: Date;
 
   userForm: FormGroup;
   userTable: User[];
@@ -48,8 +50,10 @@ export class LoginComponent implements OnInit {
       console.log(user.user_id);
       if (this.usernameMain === user.username) {
         this.userId = user.user_id;
-        console.log('usernameMain is:  ' + this.userId);
-        this.route.navigate(['/calander'], { queryParams: { useridMain: this.userId } });
+        this.gender = user.gender;
+        this.birthday = user.birthday;
+        console.log('usernameMain is:  ' + this.userId + this.gender);
+        this.route.navigate(['/calander'], { queryParams: { useridMain: this.userId, userGender: this.gender, userAge: this.birthday } });
       }
     }
   }
