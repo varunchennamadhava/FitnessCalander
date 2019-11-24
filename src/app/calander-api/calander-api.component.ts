@@ -90,14 +90,14 @@ export class CalanderAPIComponent implements OnInit {
     console.log(this.newArray);
 
     for(let i = 1; i < this.newFood.length; i++) {
-      let j = 1;
+      let j = 0;
       let dateString = this.newFood[i].timestamp;
-      if(dateString === this.newFood[i-1].timestamp) {
+      if(dateString === this.newFood[j].timestamp) {
         this.newArray[j].calories += parseInt(this.newFood[i].food_calories);
         }
       else {
         this.newArray.push({date: this.newFood[i].timestamp, calories: parseInt(this.newFood[i].food_calories)});
-        j++;
+        j = i;
       }
       }
       console.log("End of Function  :");
