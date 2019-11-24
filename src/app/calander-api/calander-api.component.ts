@@ -20,6 +20,8 @@ export class CalanderAPIComponent implements OnInit {
   userId: number;
   birthday: Date;
   newBirthday: number;
+  kIndex = 0;
+  jIndex = 0;
 
   weight: number;
   height: number;
@@ -76,7 +78,7 @@ export class CalanderAPIComponent implements OnInit {
       this.makeDate_Calories_Eaten_Table();
       this.takeOutDashes();
       this.newBirthday = this.calculateAge(this.birthday);
-      this.insertToEvents();
+      // this.insertToEvents();
    }, 1000);
   }
 
@@ -91,22 +93,21 @@ export class CalanderAPIComponent implements OnInit {
 
   makeDate_Calories_Eaten_Table() {
     console.log('Hello');
-    console.log(this.newFood[0].timestamp);
-    console.log(this.newWeight[0].timestamp);
+    // console.log(this.newFood[0].timestamp);
+    // console.log(this.newWeight[0].timestamp);
 
-
+    console.log(this.newFood);
     this.newArray.push({date: this.newFood[0].timestamp, calories: parseInt(this.newFood[0].food_calories)});
     console.log(this.newArray);
 
     for(let i = 1; i < this.newFood.length; i++) {
-      let j = 0;
-      let dateString = this.newFood[i].timestamp;
-      if(dateString === this.newFood[j].timestamp) {
-        this.newArray[j].calories += parseInt(this.newFood[i].food_calories);
+      if (this.newFood[i].timestamp === this.newFood[this.jIndex].timestamp) {
+        this.newArray[this.kIndex].calories += parseInt(this.newFood[i].food_calories);
         }
       else {
+        this.jIndex = i;
+        this.kIndex ++;
         this.newArray.push({date: this.newFood[i].timestamp, calories: parseInt(this.newFood[i].food_calories)});
-        j = i;
       }
     }
 
@@ -171,65 +172,65 @@ export class CalanderAPIComponent implements OnInit {
 
     }
 
-    public insertToEvents() {
-      for (let i = 0; i < this.newArray.length; i++) {
-        for (let j = 0; j < this.newSubWeight.length -1; j++) {
-        let firstIndex = 0;
-        let secIndex = 1;
-        if (this.newArray[i].date >= this.newSubWeight[firstIndex].date && this.newArray[i].date < this.newSubWeight[secIndex].date) {
-          let height = this.newSubWeight[firstIndex].height;
-          let weight = this.newSubWeight[firstIndex].weight;
-          let BMR = this.calculateBMR(height, weight, this.newBirthday, this.gender);
-          let green = this.twoPoundPerWeek(BMR);
-          let lightGreen = this.onePoundPerWeek(BMR);
-          let yellow = this.maintainPoundPerWeek(BMR);
+    // public insertToEvents() {
+    //   for (let i = 0; i < this.newArray.length; i++) {
+    //     for (let j = 0; j < this.newSubWeight.length -1; j++) {
+    //     let firstIndex = 0;
+    //     let secIndex = 1;
+    //     if (this.newArray[i].date >= this.newSubWeight[firstIndex].date && this.newArray[i].date < this.newSubWeight[secIndex].date) {
+    //       let height = this.newSubWeight[firstIndex].height;
+    //       let weight = this.newSubWeight[firstIndex].weight;
+    //       let BMR = this.calculateBMR(height, weight, this.newBirthday, this.gender);
+    //       let green = this.twoPoundPerWeek(BMR);
+    //       let lightGreen = this.onePoundPerWeek(BMR);
+    //       let yellow = this.maintainPoundPerWeek(BMR);
 
-          if (this.newArray[i].calories >= green) {
-            this.events.push({date: this.makeDateAgain(this.newSubWeight[firstIndex].date), rendering: 'background',
-            backgroundColor: '##00FF00'});
-          }
-          if ( lightGreen <= this.newArray[i].calories && this.newArray[i].calorie < green) {
-            this.events.push({date: this.makeDateAgain(this.newSubWeight[firstIndex].date), rendering: 'background',
-            backgroundColor: '#90ee90'});
-          }
-          if (yellow <= this.newArray[i].calories) {
-            this.events.push({date: this.makeDateAgain(this.newSubWeight[firstIndex].date), rendering: 'background',
-            backgroundColor: '#FFFF00'});
-          }
-        }
-        if (this.newArray[i].date < this.newSubWeight[firstIndex].date){
-          firstIndex ++;
-          secIndex ++;
-          continue;
-        }
-        if (this.newArray[i].date >= this.newSubWeight[secIndex].date){
+    //       if (this.newArray[i].calories >= green) {
+    //         this.events.push({date: this.makeDateAgain(this.newSubWeight[firstIndex].date), rendering: 'background',
+    //         backgroundColor: '##00FF00'});
+    //       }
+    //       if ( lightGreen <= this.newArray[i].calories && this.newArray[i].calorie < green) {
+    //         this.events.push({date: this.makeDateAgain(this.newSubWeight[firstIndex].date), rendering: 'background',
+    //         backgroundColor: '#90ee90'});
+    //       }
+    //       if (yellow <= this.newArray[i].calories) {
+    //         this.events.push({date: this.makeDateAgain(this.newSubWeight[firstIndex].date), rendering: 'background',
+    //         backgroundColor: '#FFFF00'});
+    //       }
+    //     }
+    //     if (this.newArray[i].date < this.newSubWeight[firstIndex].date){
+    //       firstIndex ++;
+    //       secIndex ++;
+    //       continue;
+    //     }
+    //     if (this.newArray[i].date >= this.newSubWeight[secIndex].date){
 
-          let height = this.newSubWeight[secIndex].height;
-          let weight = this.newSubWeight[secIndex].weight;
-          let BMR = this.calculateBMR(height, weight, this.newBirthday, this.gender);
-          let green = this.twoPoundPerWeek(BMR);
-          let lightGreen = this.onePoundPerWeek(BMR);
-          let yellow = this.maintainPoundPerWeek(BMR);
+    //       let height = this.newSubWeight[secIndex].height;
+    //       let weight = this.newSubWeight[secIndex].weight;
+    //       let BMR = this.calculateBMR(height, weight, this.newBirthday, this.gender);
+    //       let green = this.twoPoundPerWeek(BMR);
+    //       let lightGreen = this.onePoundPerWeek(BMR);
+    //       let yellow = this.maintainPoundPerWeek(BMR);
 
-          if (this.newArray[i].calories >= green) {
-            this.events.push({date: this.makeDateAgain(this.newSubWeight[secIndex].date), rendering: 'background',
-            backgroundColor: '##00FF00'});
-          }
-          if ( lightGreen <= this.newArray[i].calories && this.newArray[i].calorie < green) {
-            this.events.push({date: this.makeDateAgain(this.newSubWeight[secIndex].date), rendering: 'background',
-            backgroundColor: '#90ee90'});
-          }
-          if (yellow <= this.newArray[i].calories) {
-            this.events.push({date: this.makeDateAgain(this.newSubWeight[secIndex].date), rendering: 'background',
-            backgroundColor: '#FFFF00'});
-          }
-        }
-        firstIndex ++;
-        secIndex ++;
-      }
-      }
-      console.log(this.events);
-    }
+    //       if (this.newArray[i].calories >= green) {
+    //         this.events.push({date: this.makeDateAgain(this.newSubWeight[secIndex].date), rendering: 'background',
+    //         backgroundColor: '##00FF00'});
+    //       }
+    //       if ( lightGreen <= this.newArray[i].calories && this.newArray[i].calorie < green) {
+    //         this.events.push({date: this.makeDateAgain(this.newSubWeight[secIndex].date), rendering: 'background',
+    //         backgroundColor: '#90ee90'});
+    //       }
+    //       if (yellow <= this.newArray[i].calories) {
+    //         this.events.push({date: this.makeDateAgain(this.newSubWeight[secIndex].date), rendering: 'background',
+    //         backgroundColor: '#FFFF00'});
+    //       }
+    //     }
+    //     firstIndex ++;
+    //     secIndex ++;
+    //   }
+    //   }
+    //   console.log(this.events);
+    // }
 
     public makeDateAgain(date: string) {
       let result = [date[0]];
