@@ -3,5 +3,5 @@ export class Weight {
   user_id: number;
   weight: number;
   height: number;
-  timeStamp: Date;
+  timestamp: Date;
 }

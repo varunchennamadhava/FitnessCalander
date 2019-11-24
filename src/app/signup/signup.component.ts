@@ -21,7 +21,7 @@ export class SignupComponent implements OnInit {
 
   weightForm: FormGroup;
   weightTable: Weight[];
-  selectedWeight: Weight  = { weightId : null , height: null, weight: null, timeStamp: null, user_id: null};
+  selectedWeight: Weight  = { weightId : null , height: null, weight: null, timestamp: null, user_id: null};
 
   constructor(
     private formBuilder: FormBuilder,

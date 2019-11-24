@@ -19,6 +19,15 @@ export class CalanderAPIComponent implements OnInit {
   calendarPlugins = [dayGridPlugin];
   userId: number;
 
+  weight: number;
+  height: number;
+  age: number;
+  gender: boolean;
+  BMR: number;
+
+  newArray = [];
+  newSubWeight = [];
+
   foodForm: FormGroup;
   foodTable: Food[];
   newFood: Food[];
@@ -26,15 +35,14 @@ export class CalanderAPIComponent implements OnInit {
 
   weightForm: FormGroup;
   weightTable: Weight[];
-  selectedWeight: Weight  = { weightId : null , height: null, weight: null, timeStamp: null, user_id: null};
+  newWeight: Weight[];
+  selectedWeight: Weight  = { weightId : null , height: null, weight: null, timestamp: null, user_id: null};
 
 
   constructor(private route: ActivatedRoute, private router: Router, private apiService: ApiService,
     ) {
 
-
   }
-
 
   ngOnInit() {
     this.route.queryParams
@@ -56,20 +64,14 @@ export class CalanderAPIComponent implements OnInit {
       console.log('Weight Table: ');
       this.weightTable = weightTable;
       console.log(this.weightTable);
+      this.newWeight = weightTable;
     });
 
     setTimeout (() => {
       this.makeDate_Calories_Eaten_Table();
       this.takeOutDashes();
    }, 1000);
-
-
-
   }
-
-
-
-
 
   goToInfoPage() {
     this.router.navigate(['/info-page'], { queryParams: { useridMain: this.userId } });
@@ -80,11 +82,11 @@ export class CalanderAPIComponent implements OnInit {
   }
 
 
-  newArray = [];
-
   makeDate_Calories_Eaten_Table() {
     console.log('Hello');
     console.log(this.newFood[0].timestamp);
+    console.log(this.newWeight[0].timestamp);
+
 
     this.newArray.push({date: this.newFood[0].timestamp, calories: parseInt(this.newFood[0].food_calories)});
     console.log(this.newArray);
@@ -99,9 +101,41 @@ export class CalanderAPIComponent implements OnInit {
         this.newArray.push({date: this.newFood[i].timestamp, calories: parseInt(this.newFood[i].food_calories)});
         j = i;
       }
+    }
+
+    this.newSubWeight.push({date: this.newWeight[0].timestamp,
+      weight: Number(this.newWeight[0].weight),
+      height: Number(this.newWeight[0].height)});
+    for (let i = 1; i < this.newWeight.length; i++) {
+      let j = 0;
+      if (this.newWeight[i].timestamp === this.newWeight[j].timestamp) {
+        this.newSubWeight.pop();
+        this.newSubWeight.push({date: this.newWeight[i].timestamp,
+          weight: Number(this.newWeight[i].weight),
+          height: Number(this.newWeight[i].height)});
+        j += 1;
+        }
+      else {
+        this.newSubWeight.push({date: this.newWeight[i].timestamp,
+          weight: Number(this.newWeight[i].weight),
+          height: Number(this.newWeight[i].height)});
+        j += 1;
       }
-      console.log("End of Function  :");
-      console.log(this.newArray);
+    }
+
+    for (let i = 1; i < this.newSubWeight.length; i++) {
+      let j = 0;
+      if (this.newSubWeight[i].timestamp === this.newSubWeight[j].timestamp){
+        this.newSubWeight.splice(j, 1);
+        j += 1;
+      }
+    }
+    console.log('NEW WEIGHT ARRAY');
+    console.log(this.newSubWeight);
+
+
+    console.log("End of Function  :");
+    console.log(this.newArray);
     }
 
     changeStringDashestoNoDashes(input: string) {
@@ -116,20 +150,17 @@ export class CalanderAPIComponent implements OnInit {
       return new_string;
     }
 
-
     takeOutDashes() {
-      for(let index = 0; index < this.newArray.length; index++) {
+      for (let index = 0; index < this.newArray.length; index++) {
         let x = this.newArray[index].date;
         this.newArray[index].date = this.changeStringDashestoNoDashes(x);
       }
+      for (let indexCopy = 0; indexCopy < this.newSubWeight.length; indexCopy++) {
+        let xCopy = this.newSubWeight[indexCopy].date;
+        this.newSubWeight[indexCopy].date = this.changeStringDashestoNoDashes(xCopy);
+      }
       console.log(this.newArray);
     }
-
-    weight: number;
-    height: number;
-    age: number;
-    gender: boolean;
-    BMR: number;
 
     //Male and Female
     //Male = true
@@ -154,15 +185,9 @@ export class CalanderAPIComponent implements OnInit {
       return (bmr * (1.46));
     }
 
+    public makeNewWeightTable() {
 
-
-
-
-
-
-
-
-
+    }
   }
 
 
