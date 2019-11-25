@@ -222,18 +222,22 @@ export class CalanderAPIComponent implements OnInit {
         if (BMI.calories <= green) {
           this.events.push({date: this.makeDateAgain(BMI.date), rendering: 'background',
           backgroundColor: '##00FF00'});
+          console.log(this.events);
         }
-        if ( lightGreen >= BMI.calories && BMI.calorie > green) {
+        if ( lightGreen >= BMI.calories && BMI.calories > green) {
           this.events.push({date: this.makeDateAgain(BMI.date), rendering: 'background',
           backgroundColor: '#90ee90'});
+          console.log(this.events);
         }
-        if (yellow >= BMI.calories && BMI.calorie > lightGreen) {
+        if (yellow >= BMI.calories && BMI.calories > lightGreen) {
           this.events.push({date: this.makeDateAgain(BMI.date), rendering: 'background',
           backgroundColor: '#FFFF00'});
+          console.log(this.events);
         }
         if (yellow < BMI.calories) {
           this.events.push({date: this.makeDateAgain(BMI.date), rendering: 'background',
           backgroundColor: '#ffcccb'});
+          console.log(this.events);
         }
       }
       console.log(this.events);
