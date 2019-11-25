@@ -1,10 +1,8 @@
 <div fxLayout="row" fxLayoutAlign="space-between center" >
-<button mat-raised-button mat-button class = "info-btn" color = "primary" (click) = "goToInfoPage()">Go To Info Page</button>
-<button mat-raised-button mat-button class = "logout-btn" color = "primary" (click) = "logOut()">Log Out</button>
-</div>
+  <button mat-raised-button mat-button class = "info-btn" color = "primary" (click) = "goToInfoPage()">Go To Info Page</button>
+  <button mat-raised-button mat-button class = "logout-btn" color = "primary" (click) = "logOut()">Log Out</button>
+  </div>
 
-<full-calendar defaultView="dayGridMonth" [plugins]="calendarPlugins"
-[events]="events"
-
-></full-calendar>
-
+  <full-calendar deepChangeDetection="true" defaultView="dayGridMonth" [plugins]="calendarPlugins"
+  [events]="this.events"
+  ></full-calendar>
