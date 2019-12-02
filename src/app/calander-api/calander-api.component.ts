@@ -31,6 +31,12 @@ export class CalanderAPIComponent implements OnInit {
   gender: string;
   BMR: number;
 
+  viewWeight: number;
+  viewHeight: number;
+  viewTwoPounds: number;
+  viewOnePounds: number;
+  viewMaintain: number;
+
   newArray = [];
   newSubWeight = [];
   arrCWH = [];
@@ -82,10 +88,11 @@ export class CalanderAPIComponent implements OnInit {
     });
 
     setTimeout (() => {
+      this.newBirthday = this.calculateAge(this.birthday);
+      this.makeLegend();
       this.makeDate_Calories_Eaten_Table();
       this.takeOutDashes();
       console.log(this.newArray);
-      this.newBirthday = this.calculateAge(this.birthday);
       // this.insertToEvents();
       this.addWeightHeight();
       this.addColor();
@@ -241,6 +248,15 @@ export class CalanderAPIComponent implements OnInit {
         }
       }
       console.log(this.events);
+    }
+
+    public makeLegend() {
+      this.viewHeight = this.weightTable[this.weightTable.length - 1].height;
+      this.viewWeight = this.weightTable[this.weightTable.length - 1].weight;
+      const BMR = this.calculateBMR(this.viewHeight, this.viewWeight, this.newBirthday, this.gender);
+      this.viewTwoPounds = Math.round(this.twoPoundPerWeek(BMR));
+      this.viewOnePounds = Math.round(this.onePoundPerWeek(BMR));
+      this.viewMaintain = Math.round(this.maintainPoundPerWeek(BMR));
     }
 
 
