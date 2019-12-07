@@ -1,3 +1,4 @@
+import { totalCalories } from './../models/totalCalories';
 import { CalanderFood } from './../models/calanderFood';
 import { Weight } from './../models/weight';
 import { Food } from './../models/food';
@@ -39,6 +40,10 @@ export class ApiService {
 
   readFoodTable(id: number): Observable<Food[]> {
     return this.httpClient.get<Food[]>(`${this.PHP_API_SERVER}/api/read_food.php/?id=${id}`);
+  }
+
+  readCaloriesTable(id: number): Observable<totalCalories[]> {
+    return this.httpClient.get<totalCalories[]>(`${this.PHP_API_SERVER}/api/read_total_food.php/?id=${id}`);
   }
 
   readWeightTable(id: number): Observable<Weight[]> {

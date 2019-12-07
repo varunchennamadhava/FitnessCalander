@@ -1,3 +1,4 @@
+import { totalCalories } from './../models/totalCalories';
 import { Weight } from './../models/weight';
 import { Food } from './../models/food';
 import { Router, Params, ActivatedRoute } from '@angular/router';
@@ -37,7 +38,6 @@ export class CalanderAPIComponent implements OnInit {
   viewOnePounds: number;
   viewMaintain: number;
 
-  newArray = [];
   newSubWeight = [];
   arrCWH = [];
   arrCWHC = [];
@@ -52,6 +52,9 @@ export class CalanderAPIComponent implements OnInit {
   weightTable: Weight[];
   newWeight: Weight[];
   selectedWeight: Weight  = { weightId : null , height: null, weight: null, timestamp: null, user_id: null};
+
+  totalCaloriesTable: totalCalories[];
+  newCalroiesArr = [];
 
 
   constructor(private route: ActivatedRoute, private router: Router, private apiService: ApiService,
@@ -80,6 +83,12 @@ export class CalanderAPIComponent implements OnInit {
       console.log(this.newFood);
     });
 
+    this.apiService.readCaloriesTable(this.userId).subscribe((calorieTable: totalCalories[]) => {
+      console.log('Calorie Table: ');
+      this.totalCaloriesTable = calorieTable;
+      console.log(this.totalCaloriesTable);
+    });
+
     this.apiService.readWeightTable(this.userId).subscribe((weightTable: Weight[]) => {
       console.log('Weight Table: ');
       this.weightTable = weightTable;
@@ -92,11 +101,10 @@ export class CalanderAPIComponent implements OnInit {
       this.makeLegend();
       this.makeDate_Calories_Eaten_Table();
       this.takeOutDashes();
-      console.log(this.newArray);
       // this.insertToEvents();
       this.addWeightHeight();
       this.addColor();
-   }, 1000);
+   }, 250);
 
   }
 
@@ -110,25 +118,6 @@ export class CalanderAPIComponent implements OnInit {
 
 
   makeDate_Calories_Eaten_Table() {
-    console.log('Hello');
-    // console.log(this.newFood[0].timestamp);
-    // console.log(this.newWeight[0].timestamp);
-
-    console.log(this.newFood);
-    this.newArray.push({date: this.newFood[0].timestamp, calories: parseInt(this.newFood[0].food_calories)});
-    console.log(this.newArray);
-
-    for(let i = 1; i < this.newFood.length; i++) {
-      if (this.newFood[i].timestamp === this.newFood[this.jIndex].timestamp) {
-        this.newArray[this.kIndex].calories += parseInt(this.newFood[i].food_calories);
-        }
-      else {
-        this.jIndex = i;
-        this.kIndex ++;
-        this.newArray.push({date: this.newFood[i].timestamp, calories: parseInt(this.newFood[i].food_calories)});
-      }
-    }
-
     this.newSubWeight.push({date: this.newWeight[0].timestamp,
       weight: Number(this.newWeight[0].weight),
       height: Number(this.newWeight[0].height)});
@@ -162,39 +151,36 @@ export class CalanderAPIComponent implements OnInit {
     console.log('NEW WEIGHT ARRAY');
     console.log(this.newSubWeight);
 
+    for (let calorie of this.totalCaloriesTable){
+      this.newCalroiesArr.push({date: (calorie.timestamp), calories: Number(calorie.sum)});
+    }
 
-    console.log("End of Function  :");
-    console.log(this.newArray);
+    console.log("New Calorie Table:");
+    console.log(this.newCalroiesArr);
     }
 
     changeStringDashestoNoDashes(input: string) {
-      // for(let h = 0; h < input.length; h++)
-      // {
-      //   if(input[h] === "-") {
-
-      //   }
-      // }
-
       var new_string = input.replace(/-|\s/g,"");
       return new_string;
     }
 
     takeOutDashes() {
-      for (let index = 0; index < this.newArray.length; index++) {
-        let x = this.newArray[index].date;
-        this.newArray[index].date = this.changeStringDashestoNoDashes(x);
-      }
       for (let indexCopy = 0; indexCopy < this.newSubWeight.length; indexCopy++) {
         let xCopy = this.newSubWeight[indexCopy].date;
         this.newSubWeight[indexCopy].date = this.changeStringDashestoNoDashes(xCopy);
       }
-      console.log(this.newArray[0]);
+
+      for (let indexCopy2 = 0; indexCopy2 < this.newCalroiesArr.length; indexCopy2++) {
+        let xCopy2 = this.newCalroiesArr[indexCopy2].date;
+        this.newCalroiesArr[indexCopy2].date = this.changeStringDashestoNoDashes(xCopy2);
+      }
+      console.log(this.newCalroiesArr);
 
 
     }
 
     public addWeightHeight() {
-      for (let food of this.newArray) {
+      for (let food of this.newCalroiesArr) {
         for (let weightIndex = 0; weightIndex < this.newSubWeight.length; weightIndex++) {
           if (food.date < this.newSubWeight[weightIndex].date) {
             this.arrCWH.push({date: food.date, calories: food.calories, weight: 0,
@@ -258,65 +244,6 @@ export class CalanderAPIComponent implements OnInit {
       this.viewOnePounds = Math.round(this.onePoundPerWeek(BMR));
       this.viewMaintain = Math.round(this.maintainPoundPerWeek(BMR));
     }
-
-
-    // public insertToEvents() {
-    //   for (let i = 0; i < this.newArray.length; i++) {
-    //     for (let j = 0; j < this.newSubWeight.length; j++) {
-    //     if (this.newArray[i].date >= this.newSubWeight[this.firstIndex].date && this.newArray[i].date < this.newSubWeight[this.secIndex].date) {
-    //       let height = this.newSubWeight[this.firstIndex].height;
-    //       let weight = this.newSubWeight[this.firstIndex].weight;
-    //       let BMR = this.calculateBMR(height, weight, this.newBirthday, this.gender);
-    //       let green = this.twoPoundPerWeek(BMR);
-    //       let lightGreen = this.onePoundPerWeek(BMR);
-    //       let yellow = this.maintainPoundPerWeek(BMR);
-
-    //       if (this.newArray[i].calories >= green) {
-    //         this.events.push({date: this.makeDateAgain(this.newSubWeight[this.firstIndex].date), rendering: 'background',
-    //         backgroundColor: '##00FF00'});
-    //       }
-    //       if ( lightGreen <= this.newArray[i].calories && this.newArray[i].calorie < green) {
-    //         this.events.push({date: this.makeDateAgain(this.newSubWeight[this.firstIndex].date), rendering: 'background',
-    //         backgroundColor: '#90ee90'});
-    //       }
-    //       if (yellow <= this.newArray[i].calories) {
-    //         this.events.push({date: this.makeDateAgain(this.newSubWeight[this.firstIndex].date), rendering: 'background',
-    //         backgroundColor: '#FFFF00'});
-    //       }
-    //     }
-    //     if (this.newArray[i].date < this.newSubWeight[this.firstIndex].date){
-    //       this.firstIndex ++;
-    //       this.secIndex ++;
-    //       continue;
-    //     }
-    //     if (this.newArray[i].date >= this.newSubWeight[this.secIndex].date){
-
-    //       let height = this.newSubWeight[this.secIndex].height;
-    //       let weight = this.newSubWeight[this.secIndex].weight;
-    //       let BMR = this.calculateBMR(height, weight, this.newBirthday, this.gender);
-    //       let green = this.twoPoundPerWeek(BMR);
-    //       let lightGreen = this.onePoundPerWeek(BMR);
-    //       let yellow = this.maintainPoundPerWeek(BMR);
-
-    //       if (this.newArray[i].calories >= green) {
-    //         this.events.push({date: this.makeDateAgain(this.newSubWeight[this.secIndex].date), rendering: 'background',
-    //         backgroundColor: '##00FF00'});
-    //       }
-    //       if ( lightGreen <= this.newArray[i].calories && this.newArray[i].calorie < green) {
-    //         this.events.push({date: this.makeDateAgain(this.newSubWeight[this.secIndex].date), rendering: 'background',
-    //         backgroundColor: '#90ee90'});
-    //       }
-    //       if (yellow <= this.newArray[i].calories) {
-    //         this.events.push({date: this.makeDateAgain(this.newSubWeight[this.secIndex].date), rendering: 'background',
-    //         backgroundColor: '#FFFF00'});
-    //       }
-    //     }
-    //     this.firstIndex ++;
-    //     this.secIndex ++;
-    //   }
-    //   }
-    //   console.log(this.events);
-    // }
 
     public makeDateAgain(date: string) {
       let result = [date[0]];
