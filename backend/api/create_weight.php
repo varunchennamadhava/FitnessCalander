@@ -18,8 +18,8 @@ if(isset($postdata) && !empty($postdata))
   }
 
   // Sanitize.
-  $weight = mysqli_real_escape_string($con, trim((int)$request->weight));
-  $height = mysqli_real_escape_string($con, trim((int)$request->height));
+  $weight = mysqli_real_escape_string($con, trim((float)$request->weight));
+  $height = mysqli_real_escape_string($con, trim((float)$request->height));
   $timestamp= mysqli_real_escape_string($con, trim($request->timestamp));
 
 
